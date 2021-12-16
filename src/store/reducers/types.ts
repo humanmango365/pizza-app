@@ -16,7 +16,10 @@ export type sortMethodType = 'popularity' | 'price' | 'alphabet'
 export enum actionTypes {
   GET_PIZZAS = "GET_PIZZAS",
   SET_SORT_METHOD = "SET_SORT_METHOD",
-  SET_CATEGORY = "SET_CATEGORY"
+  SET_CATEGORY = "SET_CATEGORY",
+  SORT_BY_POPULAR = "SORT_BY_POPULAR",
+  SORT_BY_ALPHABET = "SORT_BY_ALPHABET",
+  SORT_BY_PRICE = "SORT_BY_PRICE"
 }
 
 // PIZZA REDUCER ACTION CREATORS

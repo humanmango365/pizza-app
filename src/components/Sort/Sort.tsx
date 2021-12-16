@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import SortPopup, { sortMethods } from "./SortPopup";
 
 const Sort: FC = () => {
@@ -10,9 +10,9 @@ const Sort: FC = () => {
     setIsPopupVisible(!isPopupVisible);
   };
 
-  const selectSort = (sort: number): void => {
+  const selectSort = useCallback((sort: number): void => {
     setSortMethod(sort);
-  };
+  }, []);
 
   return (
     <div className="sort">

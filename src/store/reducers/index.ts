@@ -5,8 +5,9 @@ import { ActionType, actionTypes, getPizzasActionType, setCategoryActionType, se
 
 export const fetchPizzas = () => {
   return async (dispatch: Dispatch<ActionType>) => {
-    const response = await axios.get("http://localhost:3000/db.json");
-    dispatch(getPizzasAC(response.data.pizzas));
+    const response = await axios.get("http://localhost:3004/pizzas");
+    console.log(response)
+    dispatch(getPizzasAC(response.data));
   };
 };
 

@@ -1,24 +1,26 @@
-import React, { FC, useState } from "react";
-import { connect } from "react-redux";
+import React, { FC, useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import { setCategoryAC } from "../../store/reducers";
-import { DispatchType } from "../../store/store";
 
-interface ICategories {
-  items: string[];
-  onClick: (name: string) => void;
-  setCategory: (category: number | null) => void;
-}
+interface ICategories {}
 
-const Categories: FC<ICategories> = ({ items, onClick, setCategory }) => {
+const Categories: FC = () => {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
 
+  const dispatch = useDispatch();
+  const items = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
+
+  const onSelectCategory = useCallback((index: number | null) => {
+    setActiveCategory(index);
+    dispatch(setCategoryAC(index));
+  }, []);
+  
   return (
     <div className="categories">
       <ul>
         <li
           onClick={() => {
-            setActiveCategory(null);
-            setCategory(null);
+            onSelectCategory(null);
           }}
           className={activeCategory === null ? "active" : ""}
         >
@@ -29,8 +31,7 @@ const Categories: FC<ICategories> = ({ items, onClick, setCategory }) => {
             <li
               className={idx === activeCategory ? "active" : ""}
               onClick={() => {
-                setActiveCategory(idx);
-                setCategory(idx);
+                onSelectCategory(idx);
               }}
               key={`${item}_${idx}`}
             >
@@ -42,10 +43,4 @@ const Categories: FC<ICategories> = ({ items, onClick, setCategory }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  setCategory: (category: number | null) => {
-    dispatch(setCategoryAC(category));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(Categories);
+export default Categories;

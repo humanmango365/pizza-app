@@ -1,14 +1,12 @@
 import React, { FC, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSortMethodAC } from "../../store/reducers";
 import { sortMethodType } from "../../store/reducers/types";
-import { DispatchType } from "../../store/store";
 
 interface ISortPopup {
   setIsPopupVisible: (arg: boolean) => void;
   selectSort: (sort: number) => void;
   sortMethod: number;
-  setSortMethod: (obj: sortMethodType) => void;
 }
 
 type sortMethodsType = {
@@ -25,8 +23,10 @@ const SortPopup: FC<ISortPopup> = ({
   setIsPopupVisible,
   selectSort,
   sortMethod,
-  setSortMethod,
 }) => {
+
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const listener = () => {
       setIsPopupVisible(false);
@@ -46,7 +46,7 @@ const SortPopup: FC<ISortPopup> = ({
             className={idx === sortMethod ? "active" : ""}
             onClick={() => {
               selectSort(idx);
-              setSortMethod(sort.type);
+              dispatch(setSortMethodAC(sort.type))
             }}
             key={`${sort.name}_${idx}`}
           >
@@ -58,10 +58,5 @@ const SortPopup: FC<ISortPopup> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: DispatchType) => ({
-  setSortMethod: (obj: sortMethodType) => {
-    dispatch(setSortMethodAC(obj));
-  },
-});
 
-export default connect(null, mapDispatchToProps)(SortPopup);
+export default React.memo(SortPopup);

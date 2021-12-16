@@ -1,22 +1,17 @@
 import React, { FC, useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import { fetchPizzas } from "./store/reducers";
-import { StoreType } from "./store/store";
-import { IPizzaItem } from "./types";
 
-interface IApp {
-  pizzas: IPizzaItem[] | null;
-  getPizzas: () => void;
-}
-
-const App: FC<IApp> = ({ pizzas, getPizzas }) => {
+const App: FC = () => {
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    getPizzas();
-  }, [getPizzas]);
+    dispatch(fetchPizzas());
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -33,14 +28,4 @@ const App: FC<IApp> = ({ pizzas, getPizzas }) => {
   );
 };
 
-const mapStateToProps = (state: StoreType) => ({
-  pizzas: state.pizzasStore.pizzas,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  getPizzas: () => {
-    dispatch(fetchPizzas());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
